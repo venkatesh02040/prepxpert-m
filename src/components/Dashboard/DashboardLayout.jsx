@@ -9,6 +9,7 @@ import {
   MoonOutlined,
   SunOutlined,
   MenuUnfoldOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import "./Dashboard.css";
@@ -18,13 +19,15 @@ const { Header, Sider, Content } = Layout;
 const DashboardLayout = () => {
   const [collapsed, setCollapsed] = useState(window.innerWidth < 768);
   const [darkMode, setDarkMode] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 450);
   const navigate = useNavigate();
-  const location = useLocation(); // Get current route
+  const location = useLocation();
 
-  // Adjust sidebar based on screen size
+  // Adjust layout based on screen size
   useEffect(() => {
     const handleResize = () => {
       setCollapsed(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 450);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -32,61 +35,78 @@ const DashboardLayout = () => {
 
   // User Profile Dropdown Menu
   const userMenu = (
-    <Menu
-      items={[
-        {
-          key: "/dashboard/profile",
-          icon: <UserOutlined />,
-          label: <Link to="/dashboard/profile">Profile</Link>,
-        },
-        {
-          key: "logout",
-          icon: <LogoutOutlined />,
-          label: "Logout",
-          onClick: () => navigate("/start-your-journey"),
-        },
-      ]}
-    />
+    <Menu>
+      <Menu.Item key="/dashboard/profile" icon={<UserOutlined />}>
+        <Link to="/dashboard/profile">Profile</Link>
+      </Menu.Item>
+      <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={() => navigate("/start-your-journey")}>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
+
+  // Navigation Menu for Mobile (Hamburger Menu)
+  const mobileMenu = (
+    <Menu>
+      <Menu.Item key="/dashboard/home" icon={<HomeOutlined />}>
+        <Link to="/dashboard/home">Home</Link>
+      </Menu.Item>
+      <Menu.Item key="/dashboard/profile" icon={<UserOutlined />}>
+        <Link to="/dashboard/profile">Profile</Link>
+      </Menu.Item>
+      <Menu.Item key="/dashboard/score-analytics" icon={<BarChartOutlined />}>
+        <Link to="/dashboard/score-analytics">Score Analytics</Link>
+      </Menu.Item>
+      <Menu.Item key="/dashboard/resources" icon={<BookOutlined />}>
+        <Link to="/dashboard/resources">Resources</Link>
+      </Menu.Item>
+    </Menu>
   );
 
   return (
     <Layout className={`dashboard-layout ${darkMode ? "dark-theme" : "light-theme"}`}>
-      {/* Sidebar */}
-      <Sider collapsed={collapsed} theme={darkMode ? "dark" : "light"} className="custom-sidebar">
-        <div className="logo">{collapsed ? "PX" : "PrepXpert"}</div>
-        <Menu
-          theme={darkMode ? "dark" : "light"}
-          mode="inline"
-          selectedKeys={[location.pathname]} // Dynamically updates based on current route
-        >
-          <Menu.Item key="/dashboard/home" icon={<HomeOutlined />}>
-            <Link to="/dashboard/home">Home</Link>
-          </Menu.Item>
-          <Menu.Item key="/dashboard/profile" icon={<UserOutlined />}>
-            <Link to="/dashboard/profile">Profile</Link>
-          </Menu.Item>
-          <Menu.Item key="/dashboard/score-analytics" icon={<BarChartOutlined />}>
-            <Link to="/dashboard/score-analytics">Score Analytics</Link>
-          </Menu.Item>
-          <Menu.Item key="/dashboard/resources" icon={<BookOutlined />}>
-            <Link to="/dashboard/resources">Resources</Link>
-          </Menu.Item>
-        </Menu>
-      </Sider>
+      {/* Sidebar for Larger Screens */}
+      {!isMobile && (
+        <Sider collapsed={collapsed} theme={darkMode ? "dark" : "light"} className="custom-sidebar">
+          <div className="logo">{collapsed ? "PX" : "PrepXpert"}</div>
+          <Menu theme={darkMode ? "dark" : "light"} mode="inline" selectedKeys={[location.pathname]}>
+            <Menu.Item key="/dashboard/home" icon={<HomeOutlined />}>
+              <Link to="/dashboard/home">Home</Link>
+            </Menu.Item>
+            <Menu.Item key="/dashboard/profile" icon={<UserOutlined />}>
+              <Link to="/dashboard/profile">Profile</Link>
+            </Menu.Item>
+            <Menu.Item key="/dashboard/score-analytics" icon={<BarChartOutlined />}>
+              <Link to="/dashboard/score-analytics">Score Analytics</Link>
+            </Menu.Item>
+            <Menu.Item key="/dashboard/resources" icon={<BookOutlined />}>
+              <Link to="/dashboard/resources">Resources</Link>
+            </Menu.Item>
+          </Menu>
+        </Sider>
+      )}
 
       {/* Main Layout */}
       <Layout>
         {/* Top Navbar */}
         <Header className="dashboard-header">
           <div className="header-left">
-            <Button style={{ color: "#6372ff" }}
-              id="nav-closer"
-              type="text"
-              icon={<MenuUnfoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              className="toggle-button"
-            />
-            <Switch style={{ paddingTop: "5px", backgroundColor:"#6372ff" }}
+            {isMobile ? (
+              <Dropdown overlay={mobileMenu} trigger={["click"]} placement="bottomLeft">
+                <Button type="text" icon={<MenuOutlined />} className="toggle-button" />
+              </Dropdown>
+            ) : (
+              <Button
+                style={{ color: "#6372ff" }}
+                id="nav-closer"
+                type="text"
+                icon={<MenuUnfoldOutlined />}
+                onClick={() => setCollapsed(!collapsed)}
+                className="toggle-button"
+              />
+            )}
+            <Switch
+              style={{ paddingTop: "5px", backgroundColor: "#6372ff" }}
               checked={darkMode}
               onChange={() => setDarkMode(!darkMode)}
               checkedChildren={<SunOutlined />}

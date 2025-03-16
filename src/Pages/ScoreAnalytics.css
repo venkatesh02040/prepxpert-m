@@ -128,7 +128,15 @@
     .improve-btn {
       padding: 10px 15px;
       font-size: 14px;
-      margin-left: 7rem;
+      margin-left: 12.5rem;
+    }
+  }
+
+  @media (max-width: 376px) {
+    .improve-btn {
+      padding: 10px 15px;
+      font-size: 14px;
+      margin-left: 10rem;
     }
   }
   
@@ -157,7 +165,7 @@
     .improve-btn {
       padding: 6px 10px;
       font-size: 10px;
-      margin-left: 5rem;
+      margin-left: 9rem;
     }
   }
   
