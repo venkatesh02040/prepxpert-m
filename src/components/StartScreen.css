@@ -1,0 +1,93 @@
+  .quiz_wrapper h3 {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  .quiz_wrapper h2 {
+    font-size: 28px;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .quiz_wrapper p {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 10px;
+  }
+
+  /* Start Button */
+  .s-btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    background: #6372ff;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .s-btn:hover {
+    background: #6372ff;
+    color: white;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .quiz_wrapper {
+      width: 90%;
+      padding: 20px;
+    }
+
+    .quiz_wrapper h2 {
+      font-size: 24px;
+    }
+
+    .s-btn {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .quiz_wrapper {
+      width: 95%;
+      padding: 15px;
+    }
+
+    .quiz_wrapper h2 {
+      font-size: 22px;
+    }
+
+    .quiz_wrapper p {
+      font-size: 14px;
+    }
+
+    .s-btn {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
+
+  @media (max-width: 375px) {
+    .quiz_wrapper {
+      width: 95%;
+      padding: 15px;
+    }
+
+    .quiz_wrapper h2 {
+      font-size: 20px;
+    }
+
+    .quiz_wrapper p {
+      font-size: 14px;
+    }
+
+    .s-btn {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
