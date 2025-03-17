@@ -93,7 +93,7 @@ const DashboardLayout = () => {
           <div className="header-left">
             {isMobile ? (
               <Dropdown overlay={mobileMenu} trigger={["click"]} placement="bottomLeft">
-                <Button type="text" icon={<MenuOutlined />} className="toggle-button" />
+                <Button type="text" icon={<MenuOutlined />} className="toggle-button" style={{ color: "#6372ff" }} />
               </Dropdown>
             ) : (
               <Button

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Typography, Row, Col, Avatar, Dropdown, Menu, Modal, Input, message } from "antd";
+import { Card, Typography, Row, Col, Avatar, Dropdown, Menu, Modal, Input, message, Button } from "antd";
 import { UserOutlined, SettingOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css"; // Import external CSS for styling
@@ -73,18 +73,23 @@ const Profile = () => {
     confirm({
       title: "Are you sure?",
       icon: <ExclamationCircleOutlined />, 
-      content: "This action will permanently delete your account.",
+      content: user.name === "guest" 
+        ? "This action is not permitted for the guest user."
+        : "This action will permanently delete your account.",
       okText: "Yes, Delete",
       okType: "danger",
       cancelText: "Cancel",
+      okButtonProps: { disabled: user.name === "guest" }, // Disable for guest user
       async onOk() {
-        try {
-          await fetch(`https://new-quiz-repo.onrender.com/users/${user.id}`, { method: "DELETE" });
-          localStorage.removeItem("user");
-          message.success("Account deleted successfully!");
-          navigate("/"); // Redirect to login page
-        } catch {
-          message.error("Error deleting account!");
+        if (user.name !== "guest") {
+          try {
+            await fetch(`https://new-quiz-repo.onrender.com/users/${user.id}`, { method: "DELETE" });
+            localStorage.removeItem("user");
+            message.success("Account deleted successfully!");
+            navigate("/"); // Redirect to login page
+          } catch {
+            message.error("Error deleting account!");
+          }
         }
       },
     });
