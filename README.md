@@ -16,7 +16,7 @@ PrepXpert is an interactive, timer-based placement assessment platform designed 
 ✔ Score Visualization: PrepXpert provides a dynamic and interactive graphical representation to display users' scores across Communication, Aptitude, and Technical sections. Each section is color-coded for clarity, and the overall score is also highlighted. The chart updates in real-time after each test, ensuring users can track their progress visually.
 
 🔐 Authentication & Security :
-✔ Securee with password-based login.
+✔ Secure with password-based login.
 ✔ User data and scores securely stored in JSON Server (hosted on Render).
 
 📊 Score Analytics & Tracking :
@@ -43,3 +43,4 @@ Open a Pull Request 📢
 For any issues or feature requests, please raise an issue on GitHub or contact the developer at srivenkatesh.yenumula@gmail.com.
 
 💡 PrepXpert – Elevate your placement preparation with structured assessments! 🚀
+
